@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<project name="TW" default="compile">
+    <target name="clean" description="remove intermediate files">
+        <delete dir="build"/>
+    </target>
+    <target name="compile" description="compile application source">
+        <mkdir dir="build/classes"/>
+        <javac includeantruntime="false" srcdir="src" destdir="build/classes"/>
+    </target>
+    <target name="compile.unit.tests" description="compile test source" depends="compile">
+        <mkdir dir="build/classes"/>
+        <javac includeantruntime="false" srcdir="testsrc" destdir="build/test-classes"/>
+    </target>
+</project>
