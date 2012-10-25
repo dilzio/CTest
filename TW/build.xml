@@ -1,16 +1,18 @@
 <?xml version="1.0"?>
-<project name="TW" default="test">
+<project name="TW" default="demo">
   
    <property name="app.classes" location="build/classes"/> 
    <property name="test.classes" location="build/testclasses"/> 
    <property name="test.resources" location="build/testresources"/> 
   
    <fileset id="test.cp" dir="lib">
+<!--
         <include name="**/hamcrest-core-1.1.jar"/>
-        <include name="**/hamcrest-library-1.1.jar"/>
+        <include name="**/hamcrest-library-1.1.jar"/> -->
+        <include name="**/hamcrest-all-1.3.jar"/>
         <include name="**/jmock-2.5.1.jar"/>
         <include name="**/jmock-junit4-2.4.0.jar"/>
-        <include name="**/junit-4.10.jar"/>
+        <include name="**/junit-dep-4.10.jar"/>
    </fileset>
  
     <target name="clean" description="remove intermediate files">
@@ -41,8 +43,8 @@
         </copy>
     </target>
 
-    <target name="test" depends="compile.unit.tests">
-    <junit printsummary="yes" haltonfailure="true">
+    <target name="run.tests" depends="compile.unit.tests">
+    <junit printsummary="no" haltonfailure="true">
        <classpath>
            <pathelement path="${app.classes}"/>
            <pathelement path="${test.classes}"/>
@@ -55,4 +57,12 @@
       </batchtest>
     </junit>
   </target>
+  <target name="demo" depends="run.tests">
+  	<java classname="com.tw.codingsubmission.Main">
+           <arg value="../test-input.txt"/>
+           <classpath>
+             <pathelement path="${app.classes}"/>
+           </classpath>
+       </java>
+     </target>
 </project>
