@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<project name="TW" default="test">
+  
+   <property name="app.classes" location="build/classes"/> 
+   <property name="test.classes" location="build/testclasses"/> 
+   <property name="test.resources" location="build/testresources"/> 
+  
+   <fileset id="test.cp" dir="lib">
+        <include name="**/hamcrest-core-1.1.jar"/>
+        <include name="**/hamcrest-library-1.1.jar"/>
+        <include name="**/jmock-2.5.1.jar"/>
+        <include name="**/jmock-junit4-2.4.0.jar"/>
+        <include name="**/junit-4.10.jar"/>
+   </fileset>
+ 
+    <target name="clean" description="remove intermediate files">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile" description="compile application source">
+        <mkdir dir="${app.classes}"/>
+        <javac includeantruntime="false" srcdir="src" destdir="${app.classes}"/>
+    </target>
+
+    <target name="compile.unit.tests" description="compile test source" depends="compile">
+        <echo>${user.dir}</echo>
+        <mkdir dir="${test.classes}"/>
+        <property name="myclasspath" refid="test.cp"/>
+        <echo message="Classpath = ${myclasspath}"/>
+        <javac includeantruntime="false" srcdir="testsrc" destdir="${test.classes}">
+	    <classpath>
+                <pathelement path="${app.classes}"/>
+                <fileset refid="test.cp"/>
+            </classpath>
+	</javac>
+        <mkdir dir="${test.resources}"/>
+        <copy todir="${test.resources}">
+             <fileset dir="testsrc">
+             <include name="**/*.txt"/>
+             </fileset>
+        </copy>
+    </target>
+
+    <target name="test" depends="compile.unit.tests">
+    <junit printsummary="yes" haltonfailure="true">
+       <classpath>
+           <pathelement path="${app.classes}"/>
+           <pathelement path="${test.classes}"/>
+           <fileset refid="test.cp"/>
+           <pathelement path="${test.resources}"/>
+        </classpath>
+      <formatter type="plain" usefile="false" />
+      <batchtest>
+          <fileset dir="${test.classes}" includes="**/*.class" />
+      </batchtest>
+    </junit>
+  </target>
+</project>
