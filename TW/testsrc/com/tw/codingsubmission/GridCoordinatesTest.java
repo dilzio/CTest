@@ -5,10 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class GridCoordinatesTest {
-	
 
 	@Test
-	public void testCreateSetGetShouldWork(){
+	public void testCreateSetGetShouldWork() {
 		GridCoordinates underTest = new GridCoordinates(5, 10);
 		assertEquals(5, underTest.getX());
 		assertEquals(10, underTest.getY());
@@ -16,12 +15,11 @@ public class GridCoordinatesTest {
 		assertEquals(34, underTest.getX());
 		assertEquals(67, underTest.getY());
 	}
-	
+
 	@Test
-	public void testToStringIsCorrect(){
+	public void testToStringIsCorrect() {
 		GridCoordinates underTest = new GridCoordinates(5, 10);
 		assertEquals("(5,10)", underTest.toString());
 	}
-	
 
 }

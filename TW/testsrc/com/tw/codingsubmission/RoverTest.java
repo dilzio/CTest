@@ -8,15 +8,19 @@ public class RoverTest {
 
 	@Test
 	public void initialPositionShouldBeCorrect() {
-		IRover underTest = new BlueRover(new GridCoordinates(5,5), new Orientation(OrientationEnum.NORTH), new Grid(new GridCoordinates(5,5)));
+		IRover underTest = new BlueRover(new GridCoordinates(5, 5),
+				new Orientation(OrientationEnum.NORTH), new Grid(
+						new GridCoordinates(5, 5)));
 		assertEquals(5, underTest.getX());
 		assertEquals(5, underTest.getY());
-		assertEquals(OrientationEnum.NORTH, underTest.getOrientation());	
+		assertEquals(OrientationEnum.NORTH, underTest.getOrientation());
 	}
-	
+
 	@Test
 	public void turningShouldGiveProperOrientation() {
-		IRover underTest = new BlueRover(new GridCoordinates(5,5), new Orientation(OrientationEnum.NORTH), new Grid(new GridCoordinates(5,5)));
+		IRover underTest = new BlueRover(new GridCoordinates(5, 5),
+				new Orientation(OrientationEnum.NORTH), new Grid(
+						new GridCoordinates(5, 5)));
 		assertEquals(OrientationEnum.NORTH, underTest.getOrientation());
 		OrientationEnum currentOrientation = underTest.rotateRight();
 		assertEquals(OrientationEnum.EAST, currentOrientation);
@@ -40,8 +44,10 @@ public class RoverTest {
 	}
 
 	@Test
-	public void movingRoverShouldGiveProperCoordinates(){
-		IRover underTest = new BlueRover(new GridCoordinates(0,0), new Orientation(OrientationEnum.NORTH), new Grid(new GridCoordinates(5,5)));
+	public void movingRoverShouldGiveProperCoordinates() {
+		IRover underTest = new BlueRover(new GridCoordinates(0, 0),
+				new Orientation(OrientationEnum.NORTH), new Grid(
+						new GridCoordinates(5, 5)));
 		underTest.move();
 		assertEquals(0, underTest.getX());
 		assertEquals(1, underTest.getY());
@@ -63,22 +69,26 @@ public class RoverTest {
 		underTest.move();
 		assertEquals(0, underTest.getX());
 		assertEquals(0, underTest.getY());
-		
-		//try to move off grid
+
+		// try to move off grid
 		underTest.move();
 		assertEquals(0, underTest.getX());
-		assertEquals(0, underTest.getY());		
+		assertEquals(0, underTest.getY());
 	}
-	
+
 	@Test
 	public void testTypeWorks() {
-		IRover blueRoverUnderTest = new BlueRover(new GridCoordinates(5,5), new Orientation(OrientationEnum.NORTH), new Grid(new GridCoordinates(5,5)));
+		IRover blueRoverUnderTest = new BlueRover(new GridCoordinates(5, 5),
+				new Orientation(OrientationEnum.NORTH), new Grid(
+						new GridCoordinates(5, 5)));
 		assertEquals("Blue Rover", blueRoverUnderTest.type());
 	}
-	
+
 	@Test
 	public void testDumpPositionAndHeadingShouldOutputCorrectly() {
-		IRover underTest = new BlueRover(new GridCoordinates(5,5), new Orientation(OrientationEnum.NORTH), new Grid(new GridCoordinates(5,5)));
+		IRover underTest = new BlueRover(new GridCoordinates(5, 5),
+				new Orientation(OrientationEnum.NORTH), new Grid(
+						new GridCoordinates(5, 5)));
 		assertEquals("5 5 N", underTest.getPositionAndHeading());
 		underTest.rotateLeft();
 		underTest.move();
@@ -95,15 +105,19 @@ public class RoverTest {
 		assertEquals("5 5 N", underTest.getPositionAndHeading());
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void addingNullCommandShouldThrowException() {
-		IRover underTest = new BlueRover(new GridCoordinates(0,0), new Orientation(OrientationEnum.NORTH), new Grid(new GridCoordinates(5,5)));
+		IRover underTest = new BlueRover(new GridCoordinates(0, 0),
+				new Orientation(OrientationEnum.NORTH), new Grid(
+						new GridCoordinates(5, 5)));
 		underTest.pushCommand(null);
 	}
 
 	@Test
 	public void testMovesWorkAsExpected() {
-		IRover underTest = new BlueRover(new GridCoordinates(0,0), new Orientation(OrientationEnum.NORTH), new Grid(new GridCoordinates(5,5)));
+		IRover underTest = new BlueRover(new GridCoordinates(0, 0),
+				new Orientation(OrientationEnum.NORTH), new Grid(
+						new GridCoordinates(5, 5)));
 		underTest.pushCommand(new MoveCommand(underTest));
 		underTest.pushCommand(new MoveCommand(underTest));
 		underTest.pushCommand(new MoveCommand(underTest));
@@ -111,18 +125,18 @@ public class RoverTest {
 		underTest.executeCommands();
 		assertEquals("0 4 N", underTest.getPositionAndHeading());
 	}
-	
+
 	/**
-	 * acceptance test for Rover 1:
-	 * grid size : 5,5
-	 * start pos: 1 2 N
-	 * command sequence: LMLMLMLMM
+	 * acceptance test for Rover 1: grid size : 5,5 start pos: 1 2 N command
+	 * sequence: LMLMLMLMM
 	 * 
 	 * result: 1 3 N
 	 */
 	@Test
 	public void assertRover1AcceptanceTest() {
-		IRover underTest = new BlueRover(new GridCoordinates(1,2), new Orientation(OrientationEnum.NORTH), new Grid(new GridCoordinates(5,5)));
+		IRover underTest = new BlueRover(new GridCoordinates(1, 2),
+				new Orientation(OrientationEnum.NORTH), new Grid(
+						new GridCoordinates(5, 5)));
 		underTest.pushCommand(new RotateLeftCommand(underTest));
 		underTest.pushCommand(new MoveCommand(underTest));
 		underTest.pushCommand(new RotateLeftCommand(underTest));
@@ -132,24 +146,22 @@ public class RoverTest {
 		underTest.pushCommand(new RotateLeftCommand(underTest));
 		underTest.pushCommand(new MoveCommand(underTest));
 		underTest.pushCommand(new MoveCommand(underTest));
-		
-		
-		
+
 		underTest.executeCommands();
 		assertEquals("1 3 N", underTest.getPositionAndHeading());
 	}
-	
+
 	/**
-	 * acceptance test for Rover 2:
-	 * grid size : 5,5
-	 * start pos: 3 3 E
-	 * command sequence: MMRMMRMRRM
+	 * acceptance test for Rover 2: grid size : 5,5 start pos: 3 3 E command
+	 * sequence: MMRMMRMRRM
 	 * 
 	 * result: 5 1 E
 	 */
 	@Test
 	public void assertRover2AcceptanceTest() {
-		IRover underTest = new BlueRover(new GridCoordinates(3,3), new Orientation(OrientationEnum.EAST), new Grid(new GridCoordinates(5,5)));
+		IRover underTest = new BlueRover(new GridCoordinates(3, 3),
+				new Orientation(OrientationEnum.EAST), new Grid(
+						new GridCoordinates(5, 5)));
 		underTest.pushCommand(new MoveCommand(underTest));
 		underTest.pushCommand(new MoveCommand(underTest));
 		underTest.pushCommand(new RotateRightCommand(underTest));
@@ -160,12 +172,9 @@ public class RoverTest {
 		underTest.pushCommand(new RotateRightCommand(underTest));
 		underTest.pushCommand(new RotateRightCommand(underTest));
 		underTest.pushCommand(new MoveCommand(underTest));
-	
-		
-		
+
 		underTest.executeCommands();
 		assertEquals("5 1 E", underTest.getPositionAndHeading());
 	}
 
-	
 }

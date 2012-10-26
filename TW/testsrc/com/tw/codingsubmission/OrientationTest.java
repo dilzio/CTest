@@ -5,33 +5,33 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class OrientationTest {
-	
+
 	@SuppressWarnings("unused")
 	@Test
-	public void happyCreationShouldWork(){
+	public void happyCreationShouldWork() {
 		Orientation or = new Orientation(OrientationEnum.NORTH);
 	}
 
 	@SuppressWarnings("unused")
-	@Test(expected=IllegalStateException.class)
-	public void unrecognizedEnumValueShouldThrowException(){
+	@Test(expected = IllegalStateException.class)
+	public void unrecognizedEnumValueShouldThrowException() {
 		Orientation or = new Orientation(OrientationEnum.TEST);
 	}
 
 	@SuppressWarnings("unused")
-	@Test(expected=IllegalArgumentException.class)
-	public void nullEnumValueShouldThrowException(){
+	@Test(expected = IllegalArgumentException.class)
+	public void nullEnumValueShouldThrowException() {
 		Orientation or = new Orientation(null);
 	}
 
 	@Test
-	public void turningShouldWorkProperly(){
+	public void turningShouldWorkProperly() {
 		Orientation or = new Orientation(OrientationEnum.NORTH);
-		
+
 		OrientationEnum currentOrientation = or.turnRight();
 		assertEquals(OrientationEnum.EAST, currentOrientation);
 		assertEquals(OrientationEnum.EAST, or.getCurrentOrientation());
-		
+
 		currentOrientation = or.turnRight();
 		assertEquals(OrientationEnum.SOUTH, currentOrientation);
 		assertEquals(OrientationEnum.SOUTH, or.getCurrentOrientation());
@@ -80,6 +80,5 @@ public class OrientationTest {
 		assertEquals(OrientationEnum.EAST, currentOrientation);
 		assertEquals(OrientationEnum.EAST, or.getCurrentOrientation());
 	}
-	
 
 }
